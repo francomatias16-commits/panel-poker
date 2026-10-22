@@ -1,0 +1,25 @@
+Simulando 4000 manos (semilla 11)...
+
+variante            perfil        decis.  logloss    base  mejora%     ECE
+--------------------------------------------------------------------------
+base                TAG-1           1313    0.822   0.879      6.5  0.0136
+base                TAG-2           1291    0.872   0.926      5.9
+base                Pasivo-1        1784    0.123   0.127      3.1
+base                TAG-3           1289    0.850   0.901      5.6
+base                Pasivo-2        1823    0.135   0.140      3.2
+base                Aleatorio       1555    1.103   1.102     -0.1
+
+posicion            TAG-1           1313    0.786   0.804      2.2  0.0110
+posicion            TAG-2           1291    0.821   0.844      2.8
+posicion            Pasivo-1        1784    0.093   0.097      3.2
+posicion            TAG-3           1289    0.776   0.796      2.5
+posicion            Pasivo-2        1823    0.095   0.099      3.2
+posicion            Aleatorio       1555    1.078   1.078     -0.0
+
+posicion+rivales    TAG-1           1313    0.766   0.780      1.8  0.0166
+posicion+rivales    TAG-2           1291    0.782   0.801      2.4
+posicion+rivales    Pasivo-1        1784    0.096   0.098      2.6
+posicion+rivales    TAG-3           1289    0.770   0.790      2.5
+posicion+rivales    Pasivo-2        1823    0.088   0.091      3.3
+posicion+rivales    Aleatorio       1555    1.078   1.078     -0.0
+

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es" data-tema="oscuro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sala de repaso</title>
+  <link rel="stylesheet" href="/static/estilo.css">
+</head>
+<body>
+<header class="barra">
+  <h1>Sala de repaso</h1>
+  <nav class="pestanas" role="tablist" aria-label="Vistas">
+    <button role="tab" id="tab-panel" aria-selected="true" aria-controls="vista-panel">Panel</button>
+    <button role="tab" id="tab-bloques" aria-selected="false" aria-controls="vista-bloques">Bloques de 1000</button>
+    <button role="tab" id="tab-repaso" aria-selected="false" aria-controls="vista-repaso">Repaso con video</button>
+    <button role="tab" id="tab-practica" aria-selected="false" aria-controls="vista-practica">Práctica</button>
+    <button role="tab" id="tab-situacion" aria-selected="false" aria-controls="vista-situacion">Situación</button>
+  </nav>
+  <button class="btn" id="btn-filtros" aria-expanded="false" aria-controls="filtros">Filtros</button>
+  <div class="fuente">
+    <span id="fuente-txt">Sin manos cargadas</span>
+    <button class="btn" id="btn-cargar">Cargar manos</button>
+  </div>
+</header>
+
+<div class="cuerpo">
+  <aside class="filtros" id="filtros" aria-label="Filtros">
+    <label>Jugador <select id="f-jugador"></select></label>
+    <label>Stake (big blind) <select id="f-stake"></select></label>
+    <div class="fila-doble">
+      <label>Desde <input type="date" id="f-desde"></label>
+      <label>Hasta <input type="date" id="f-hasta"></label>
+    </div>
+    <div>
+      <div class="nota" style="margin-bottom:6px">Posición del jugador</div>
+      <div class="chips" id="f-posiciones"></div>
+    </div>
+    <label>Mínimo de manos <input type="number" id="f-min" min="0" value="0"></label>
+    <label>Ordenar la tabla por
+      <select id="f-metrica">
+        <option value="manos">Manos</option><option value="bb100">bb/100</option><option value="vpip">VPIP</option>
+        <option value="pfr">PFR</option><option value="tres_bet">3-bet</option><option value="af">Agresión (AF)</option>
+        <option value="wtsd">WTSD</option><option value="wsd">W$SD</option><option value="cbet">C-bet</option>
+        <option value="drawdown">Drawdown</option>
+      </select>
+    </label>
+    <label>Ordenar las manos por
+      <select id="f-orden">
+        <option value="cronologico">Orden de juego</option><option value="ganancia">Mayor ganancia</option><option value="perdida">Mayor pérdida</option>
+      </select>
+    </label>
+    <label class="check"><input type="checkbox" id="f-sd"> Solo manos con showdown</label>
+    <button class="btn" id="btn-limpiar">Limpiar filtros</button>
+    <p class="nota">La posición filtra el detalle del jugador y la lista de manos. La tabla de jugadores usa stake y fechas.</p>
+  </aside>
+
+  <main>
+    <section class="vista" id="vista-panel" role="tabpanel" aria-labelledby="tab-panel"></section>
+
+    <section class="vista" id="vista-bloques" role="tabpanel" aria-labelledby="tab-bloques" hidden></section>
+
+    <section class="vista" id="vista-repaso" role="tabpanel" aria-labelledby="tab-repaso" hidden>
+      <div class="repaso">
+        <div class="bloque lista-manos" id="lista-manos" aria-label="Manos del jugador"></div>
+        <div class="centro">
+          <div class="mesa" id="mesa" aria-label="Mesa"></div>
+          <div class="controles" id="controles">
+            <button class="btn" id="b-ini" title="Primer paso (Inicio)">Inicio</button>
+            <button class="btn" id="b-ant" title="Paso anterior (flecha izquierda)">Anterior</button>
+            <button class="btn primario" id="b-play" title="Reproducir los pasos">Reproducir</button>
+            <button class="btn" id="b-sig" title="Paso siguiente (flecha derecha)">Siguiente</button>
+            <button class="btn" id="b-fin" title="Último paso (Fin)">Final</button>
+            <input type="range" id="r-paso" min="0" max="0" value="0" aria-label="Paso de la mano">
+            <span class="etiqueta-paso" id="etq-paso"></span>
+          </div>
+          <div class="bloque cinta" id="cinta"></div>
+        </div>
+        <div class="guia">
+          <div class="bloque video-dock" id="video-dock"></div>
+          <div class="bloque" id="guia"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="vista" id="vista-practica" role="tabpanel" aria-labelledby="tab-practica" hidden></section>
+
+    <section class="vista" id="vista-situacion" role="tabpanel" aria-labelledby="tab-situacion" hidden>
+      <div class="situacion">
+        <form class="bloque" id="form-situacion" autocomplete="off">
+          <header><h2>Una situación</h2></header>
+          <div class="rejilla-campos">
+            <label class="campo">Tus cartas<input id="s-cartas" placeholder="As Kd" required></label>
+            <label class="campo">Tablero<input id="s-tablero" placeholder="Qs 7h 2c"></label>
+            <label class="campo">Posición
+              <select id="s-pos"><option>UTG</option><option>UTG+1</option><option>MP</option><option>HJ</option><option>CO</option><option selected>BTN</option><option>SB</option><option>BB</option></select>
+            </label>
+            <label class="campo">Bote (fichas)<input id="s-bote" type="number" min="0" step="any" value="3"></label>
+            <label class="campo">Para igualar<input id="s-pagar" type="number" min="0" step="any" value="0"></label>
+            <label class="campo">Big blind<input id="s-bb" type="number" min="0.01" step="any" value="1"></label>
+            <label class="campo">Subidas preflop<input id="s-subidas" type="number" min="0" max="5" value="0"></label>
+            <label class="campo">Limpers<input id="s-limpers" type="number" min="0" max="5" value="0"></label>
+          </div>
+          <div id="s-rivales"></div>
+          <div class="controles" style="margin-top:12px">
+            <button type="button" class="btn" id="s-mas">Agregar rival</button>
+            <button type="submit" class="btn primario">Analizar</button>
+          </div>
+          <p class="nota">El rango de cada rival es el mejor X% de manos. También podés escribir manos exactas, por ejemplo: AA KK AKs.</p>
+        </form>
+        <div class="bloque" id="s-resultado"><p class="vacio">Escribí una situación y tocá Analizar. Usa equity contra el rango de cada rival, las pot odds y los umbrales de valor.</p></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<dialog id="dlg-cargar">
+  <form method="dialog" id="form-cargar">
+    <h2>Cargar manos</h2>
+    <label class="campo">Carpeta con los historiales (en esta computadora)
+      <input id="c-ruta" placeholder="/home/yo/historiales">
+    </label>
+    <label class="campo">Formato
+      <select id="c-formato"><option value="phh">PHH</option><option value="texto">Texto (estilo PokerStars o GGPoker)</option></select>
+    </label>
+    <p class="nota">Las manos se leen en el servidor local y no salen de tu computadora.</p>
+    <menu>
+      <button type="button" class="btn" id="c-demo">Usar manos simuladas</button>
+      <button type="button" class="btn" id="c-cancelar">Cancelar</button>
+      <button type="submit" class="btn primario" value="ok">Cargar</button>
+    </menu>
+  </form>
+</dialog>
+<div class="aviso" id="aviso" role="status" aria-live="polite" hidden></div>
+<script src="/static/app.js"></script>
+</body>
+</html>

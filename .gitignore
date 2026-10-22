@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Datos pesados o personales: NO subir (el dataset PHH pesa ~15 GB y los historiales son tuyos)
+datos/
+historiales*/
+*.phh
+# excepción: ejemplo que usan las pruebas
+!tests/fixtures/*.phh
+validacion_*.csv
+validacion_*.txt
+validacion_*.md
+
+# Videos de sesiones
+*.mp4
+*.mkv
+*.mov
+
+# Editor y sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

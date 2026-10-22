@@ -1,9 +1,0 @@
-Manos leídas: 0
-Válidas: 0
-Rechazadas: 0
-
-Rechazos por motivo:
-
-Archivos con más rechazos (válidas / rechazadas):
-
-Controles de integridad fallidos: 0
